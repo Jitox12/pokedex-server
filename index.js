@@ -20,11 +20,9 @@ mongoose.connect(
     } else {
       console.log('La conexion a la base de datos es correcta')
       app.listen(PORT_SERVER, () => {
-        console.log('**********************')
-        console.log('*******API REST*******')
-        console.log('**********************')
+     
         console.log(
-          `localhost://${IP_SERVER}:${PORT_SERVER}/api/${API_VERSION}`
+          `mongodb://${IP_SERVER}:${PORT_SERVER}/api/${API_VERSION}`
         )
       })
     }

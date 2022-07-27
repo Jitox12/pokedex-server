@@ -1,16 +1,40 @@
 const mongoose = require('mongoose')
 
 const PokemonSchema = new mongoose.Schema({
-  name: String,
-  number: Number,
-  height: Number,
-  weight: Number,
-  category: String,
-  ablity: String,
-  gender: Boolan,
-  type: { type: Schema.ObjectId, ref: 'Type' },
-  weakness: { type: Schema.ObjectId, ref: 'Type' },
-  statistic: { type: Schema.ObjectId, ref: 'Statistic' },
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  number: {
+    type:Number,
+    required: true,
+    unique: true,
+  },
+  height: {
+    type:Number,
+    required: true
+  },
+  weight: {
+    type:Number,
+    required: true
+  },
+  category: {
+    type:String,
+    required: true
+  },
+  ability: {
+    type:String,
+    required: true
+  },
+  //Probar con ENUM
+  gender: {
+    type: Boolean,
+    required: true
+  },
+  type: {  },
+  weakness: {  },
+
 })
 
 module.exports = mongoose.model('Pokemon', PokemonSchema)
