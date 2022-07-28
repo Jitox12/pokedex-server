@@ -1,12 +1,11 @@
 const app = require('./app')
 const mongoose = require('mongoose')
+require('dotenv').config({path:'./config/.env'})
 
-const {
-  API_VERSION,
-  IP_SERVER,
-  PORT_DB,
-  PORT_SERVER,
-} = require('./config/detault')
+const API_VERSION = process.env.API_VERSION
+const IP_SERVER = process.env.IP_SERVER
+const PORT_DB = process.env.PORT_DB
+const PORT_SERVER = process.env.PORT_SERVER
 
 mongoose.connect(
   `mongodb://${IP_SERVER}:${PORT_DB}/pokedex`,

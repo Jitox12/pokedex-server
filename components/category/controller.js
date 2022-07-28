@@ -1,6 +1,5 @@
 const Category = require('./model')
 
-
 function createCategory(req, res) {
 
     const categoryModel = new Category()
@@ -15,11 +14,9 @@ function createCategory(req, res) {
     categoryModel
       .save()
       .then((response) => {
-        if (response) {
           res
             .status(200)
             .send({ message: `${response.category} se ha creado con exito` })
-        }
       })
       .catch((err) => {
         if (!err) {
@@ -27,11 +24,27 @@ function createCategory(req, res) {
         } else {
             res
             .status(409)
-            .send({ message: "La categoria ya existe" })
+            .send({ message: err.message })
         }
       })
   }
+
+function deleteCategory(req,res){
+}
+
+function updateCategory(req,res){
+}
+
+function findCategories(req,res){
+}
+
+function findCategory(req,res){
+}
   
   module.exports = {
-    createCategory
+    createCategory,
+    deleteCategory,
+    updateCategory,
+    findCategories,
+    findCategory
   }

@@ -14,6 +14,7 @@ api.get('/find-pokemon/:id', PokemonController.findPokemon)
 
 //PUT
 
+api.put('/update-pokemon/:id', PokemonController.updatePokemon)
 
 
 module.exports = api

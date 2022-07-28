@@ -1,6 +1,5 @@
 const Pokemon = require("./model")
-const { nullValidatorString } = require("../../utils")
-const { json } = require("body-parser")
+
 
 function createPokemon(req, res) {
   const pokemon = new Pokemon()
@@ -29,11 +28,9 @@ function createPokemon(req, res) {
   pokemon
     .save()
     .then((response) => {
-      if (response) {
         res
           .status(200)
           .send({ message: `${pokemon.name} se ha creado con exito` })
-      }
     })
     .catch((err) => {
       if (err.code === 11000) {
@@ -50,6 +47,18 @@ function deletePokemon(req,res){
 }
 
 function updatePokemon(req,res){
+  let pokemonData = req.body
+
+
+  Pokemon.findByIdAndUpdate(req.params.id, pokemonData, { runValidators: true }).then(response => {
+    res.status(200).send({message: `${pokemonData.name} se ha actualizado correctamente`})
+  }).catch(err => {
+    if(err.code === 11000){
+      res.send({message: 'El nombre o el número de pokémon ya existe'})
+    }else{
+      res.status(500).send(err.message)
+    }
+  })
 }
 
 function findPokemons(req,res){

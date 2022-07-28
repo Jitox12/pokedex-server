@@ -1,6 +1,9 @@
 const express = require('express')
-const {API_VERSION} = require('../config/detault')
 const router = express.Router()
+
+require('dotenv').config({path:'./config/.env'})
+
+const API_VERSION = process.env.API_VERSION
 
 const PokemonRoutes = require('../components/pokemon/routes')
 const TypeRoutes = require('../components/type/routes')
