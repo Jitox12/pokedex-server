@@ -3,8 +3,13 @@ const mongoose = require('mongoose')
 const TypeSchema = new mongoose.Schema({
     type: {
       type:String,
-      require: true,
+      required: true,
+      unique: true,
     }
-  })
+  },
+  {
+    versionKey:false
+  }
+  )
 
-  module.exports = mongoose.model('type', TypeSchema)
+  module.exports = mongoose.model('Type', TypeSchema)

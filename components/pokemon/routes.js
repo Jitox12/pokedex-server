@@ -9,7 +9,8 @@ const api = express.Router()
 api.post('/create-pokemon', PokemonController.createPokemon)
 
 //GET
-
+api.get('/find-pokemons', PokemonController.findPokemons)
+api.get('/find-pokemon/:id', PokemonController.findPokemon)
 
 //PUT
 

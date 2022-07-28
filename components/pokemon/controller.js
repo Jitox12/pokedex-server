@@ -1,5 +1,6 @@
 const Pokemon = require("./model")
 const { nullValidatorString } = require("../../utils")
+const { json } = require("body-parser")
 
 function createPokemon(req, res) {
   const pokemon = new Pokemon()
@@ -15,34 +16,23 @@ function createPokemon(req, res) {
     weakness,
   } = req.body
 
-  ;(pokemon.name = nullValidatorString(name)
-    ? res.status(400).send({ message: "name is empty" })
-    : name),
-    (pokemon.number = !number
-      ? res.status(400).send({ message: "number is empty" })
-      : number),
-    (pokemon.height = !height
-      ? res.status(200).send({ message: "height is empty" })
-      : height),
-    (pokemon.weight = !weight
-      ? res.status(200).send({ message: "weight is empty" })
-      : weight),
-    (pokemon.ability = nullValidatorString(ability)),
-    (pokemon.gender = !gender
-      ? res.status(200).send({ message: "gender is empty" })
-      : gender),
-    (pokemon.category = nullValidatorString(category))
+    pokemon.name = name.trim(),
+    pokemon.number = number,
+    pokemon.height = height,
+    pokemon.weight = weight,
+    pokemon.ability = ability,
+    pokemon.gender = gender,
+    pokemon.category = category,
+    pokemon.type = type,
+    pokemon.weakness = weakness
 
   pokemon
     .save()
     .then((response) => {
       if (response) {
-        console.log(response)
         res
           .status(200)
           .send({ message: `${pokemon.name} se ha creado con exito` })
-      } else {
-        console.log(response)
       }
     })
     .catch((err) => {
@@ -51,11 +41,83 @@ function createPokemon(req, res) {
           .status(409)
           .send({ message: "El nombre o el número del pokémon ya existe" })
       } else {
-        res.status(500).send({ message: "Error de servidor" })
+        res.status(500).send({ message: err.message })
       }
     })
 }
 
+function deletePokemon(req,res){
+}
+
+function updatePokemon(req,res){
+}
+
+function findPokemons(req,res){
+
+  Pokemon.find()
+  .populate('category', {
+    category: 1,
+    _id:0
+  })
+  .populate('type', {
+    type: 1,
+    _id: 0
+  }).populate('weakness',{
+    type:1,
+    _id:0
+  })
+  .then((response) => {
+    if (response) {
+      res
+        .status(200)
+        .json(response)
+    }
+  })
+  .catch((err) => {
+    if (!err) {
+      res.status(500).send({ message: err.message })
+    } else {
+      res
+      .status(400)
+      .send({ message: "No se encontró ningún el pokémon" })
+    }
+  })
+}
+
+function findPokemon(req,res){
+
+  //middleware para obligar a enviar un _ID en la ruta
+  const {id} = req.params
+
+  Pokemon.findById(id)
+  .populate('category', {
+    category: 1,
+    _id:0
+  })
+  .populate('type', {
+    type: 1,
+    _id: 0
+  }).populate('weakness',{
+    type:1,
+    _id:0
+  })
+  .then((response) => {
+    if(response){
+     
+      res.status(200).json(response)
+    }
+  }).catch((err) => {
+  
+        res.status(500).send({message: err.message})
+     
+  })
+  }
+
+
 module.exports = {
   createPokemon,
+  deletePokemon,
+  updatePokemon,
+  findPokemons,
+  findPokemon,
 }

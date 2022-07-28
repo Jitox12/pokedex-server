@@ -19,10 +19,7 @@ const PokemonSchema = new mongoose.Schema({
     type:Number,
     required: true
   },
-  category: {
-    type:String,
-    required: true
-  },
+  category: {type: mongoose.Schema.Types.ObjectId, ref:'Category', required: true},
   ability: {
     type:String,
     required: true
@@ -32,9 +29,12 @@ const PokemonSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  type: {  },
-  weakness: {  },
-
-})
+  type: {type: mongoose.Schema.Types.ObjectId, ref:'Type', required: true},
+  weakness: [{type: mongoose.Schema.Types.ObjectId, ref:'Type', required:true}],
+},
+{
+  versionKey: false
+}
+)
 
 module.exports = mongoose.model('Pokemon', PokemonSchema)
