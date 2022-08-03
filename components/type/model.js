@@ -1,15 +1,16 @@
 const mongoose = require('mongoose')
 
-const TypeSchema = new mongoose.Schema({
+const TypeSchema = new mongoose.Schema(
+  {
     type: {
-      type:String,
+      type: String,
       required: true,
       unique: true,
-    }
+    },
   },
   {
-    versionKey:false
+    versionKey: false,
   }
-  )
+)
 
-  module.exports = mongoose.model('Type', TypeSchema)
+module.exports = mongoose.model('Type', TypeSchema)

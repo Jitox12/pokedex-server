@@ -1,6 +1,6 @@
 const app = require('./app')
 const mongoose = require('mongoose')
-require('dotenv').config({path:'./config/.env'})
+require('dotenv').config({ path: './config/.env' })
 
 const API_VERSION = process.env.API_VERSION
 const IP_SERVER = process.env.IP_SERVER
@@ -19,10 +19,7 @@ mongoose.connect(
     } else {
       console.log('La conexion a la base de datos es correcta')
       app.listen(PORT_SERVER, () => {
-     
-        console.log(
-          `mongodb://${IP_SERVER}:${PORT_SERVER}/api/${API_VERSION}`
-        )
+        console.log(`mongodb://${IP_SERVER}:${PORT_SERVER}/api/${API_VERSION}`)
       })
     }
   }
