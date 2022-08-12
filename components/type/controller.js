@@ -1,13 +1,13 @@
 const Type = require('./model')
+const {toUpperCaseFirstKey} = require('../../utils')
 
 function createType(req, res) {
   const modelType = new Type()
   const { type } = req.body
+  toUpperCaseType = toUpperCaseFirstKey(type)
 
-  let beginning = type.trim().charAt(0).toUpperCase()
-  let rest = type.trim().slice(1)
-
-  ;(modelType.type = beginning + rest),
+  modelType.type = toUpperCaseType
+  modelType.avatar = req.file
     modelType
       .save()
       .then((response) => {
@@ -47,10 +47,9 @@ function deleteType(req, res) {
 function updateType(req, res) {
   let typeData = req.body
 
-  let rest = typeData.type.trim().slice(1)
-  let beginning = typeData.type.trim().charAt(0).toUpperCase()
+  toUpperCaseType = toUpperCaseFirstKey(typeData.type)
 
-  typeData.type = beginning + rest
+  typeData.type = toUpperCaseType
   Type.findByIdAndUpdate(req.params.id, typeData, { runValidators: true })
     .then((result) => {
       if (!result) {

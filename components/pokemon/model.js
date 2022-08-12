@@ -29,6 +29,10 @@ const PokemonSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    avatar:{
+      type: Object,
+      required:true
+    },
 
     type: { type: mongoose.Schema.Types.ObjectId, ref: 'Type', required: true },
     weakness: [

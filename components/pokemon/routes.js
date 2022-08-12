@@ -1,10 +1,11 @@
 const express = require('express')
 const PokemonController = require('./controller')
+const uploadFiles = require('../../middleware/multer')
 
 const api = express.Router()
 
 //POST
-api.post('/create-pokemon', PokemonController.createPokemon)
+api.post('/create-pokemon', uploadFiles().single('avatar'), PokemonController.createPokemon)
 
 //GET
 api.get('/find-pokemons', PokemonController.findPokemons)

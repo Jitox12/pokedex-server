@@ -7,6 +7,10 @@ const TypeSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    avatar: {
+      type:Object,
+      require:true
+    }
   },
   {
     versionKey: false,

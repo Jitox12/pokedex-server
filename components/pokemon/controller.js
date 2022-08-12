@@ -1,20 +1,21 @@
 const Pokemon = require('./model')
+const {toUpperCaseFirstKey} = require('../../utils')
 
 function createPokemon(req, res) {
   const pokemon = new Pokemon()
   const { name, number, height, weight, category, ability, type, weakness } =
     req.body
-
-  let beginning = name.trim().charAt(0).toUpperCase()
-  let rest = name.trim().slice(1)
-  ;(pokemon.name = beginning + rest),
-    (pokemon.number = number),
-    (pokemon.height = height),
-    (pokemon.weight = weight),
-    (pokemon.ability = ability),
-    (pokemon.category = category),
-    (pokemon.type = type),
-    (pokemon.weakness = weakness)
+  const toUpperCaseName = toUpperCaseFirstKey(name)
+  
+    pokemon.name = toUpperCaseName
+    pokemon.number = number
+    pokemon.height = height
+    pokemon.weight = weight
+    pokemon.ability = ability
+    pokemon.category = category
+    pokemon.type = type
+    pokemon.weakness = weakness
+    pokemon.avatar = req.file
 
   pokemon
     .save()
@@ -50,12 +51,10 @@ function deletePokemon(req, res) {
 
 function updatePokemon(req, res) {
   let pokemonData = req.body
-  let beginning = pokemonData.name.trim().charAt(0).toUpperCase()
-  let rest = pokemonData.name.trim().slice(1)
+  const toUpperCaseName = toUpperCaseFirstKey(pokemonData.name)
 
-  pokemonData.name = beginning + rest
+  pokemonData.name = toUpperCaseName
 
-  console.log(pokemonData)
   Pokemon.findByIdAndUpdate(req.params.id, pokemonData, { runValidators: true })
     .then((response) => {
       if (!response) {

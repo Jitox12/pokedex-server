@@ -1,13 +1,13 @@
 const Category = require('./model')
+const {toUpperCaseFirstKey} = require('../../utils')
 
 function createCategory(req, res) {
   const categoryModel = new Category()
 
   const { category } = req.body
-  let beginning = category.trim().charAt(0).toUpperCase()
-  let rest = category.trim().slice(1)
+  const toUpperCaseCategory = toUpperCaseFirstKey(category)
 
-  ;(categoryModel.category = beginning + rest),
+  categoryModel.category = toUpperCaseCategory
     categoryModel
       .save()
       .then((response) => {
@@ -42,10 +42,9 @@ function deleteCategory(req, res) {
 
 function updateCategory(req, res) {
   categoryData = req.body
+  const toUpperCaseCategory = toUpperCaseFirstKey(categoryData.category)
 
-  let beginning = categoryData.category.trim().charAt(0).toUpperCase()
-  let rest = categoryData.category.trim().slice(1)
-  categoryData.category = beginning + rest
+  categoryData.category = toUpperCaseCategory
 
   Category.findOneAndUpdate(req.params.id, categoryData, {
     runValidators: true,
